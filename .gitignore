@@ -1,0 +1,37 @@
+# Dipendenze e output generati
+node_modules/
+dist/
+coverage/
+
+# Variabili d'ambiente e configurazione npm locale
+.env
+.env.*
+!.env.example
+.npmrc
+
+# Credenziali e chiavi locali
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+credentials.json
+service-account*.json
+
+# Log e file temporanei
+*.log
+*.local
+*.tmp
+*.swp
+*.swo
+
+# Configurazione locale degli editor
+.vscode/
+.idea/
+
+# File del sistema operativo
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
