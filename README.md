@@ -6,7 +6,7 @@ Strike & Ball è un progetto di apprendimento pensato per il portfolio: document
 
 L'obiettivo è esercitare il ragionamento sul codice, motivare le scelte e verificare ogni passaggio. Il progetto privilegia soluzioni semplici e comprensibili, senza introdurre strumenti che non servono alla fase corrente.
 
-> Stato attuale: la logica di generazione e confronto è implementata. L'ambiente React è funzionante, ma la pagina mostra soltanto il titolo. Non è ancora possibile giocare dall'interfaccia.
+> Stato attuale: la logica di generazione e confronto è implementata. React genera e conserva la combinazione segreta nello stato del componente; la pagina mostra ancora soltanto il titolo. Non è ancora possibile giocare dall'interfaccia.
 
 ## Il gioco
 
@@ -44,7 +44,15 @@ La logica è stata poi raccolta in `checkAttemptCombination`, che riceve due arr
 
 ### 4. Separazione della logica
 
-Il file `gameplay.js` contiene le due funzioni con export nominati raggruppati. Le chiamate di prova, i log e il vecchio codice commentato sono stati rimossi. Le funzioni non sono ancora importate nell'interfaccia React.
+Il file `gameplay.js` contiene le due funzioni con export nominati raggruppati. Le chiamate di prova, i log e il vecchio codice commentato sono stati rimossi. La funzione di generazione è ora importata in React; quella di confronto sarà collegata quando verrà gestito l'invio dei tentativi.
+
+### 5. Inizializzazione dello stato della partita
+
+In `App.jsx`, `useState` conserva la combinazione segreta. La funzione `generateSecretCombination` viene passata come inizializzatore, senza chiamarla direttamente: React ne usa il risultato iniziale e mantiene lo stato nei render successivi.
+
+Un ricaricamento completo della pagina inizializza nuovamente il componente. In sviluppo, `StrictMode` può chiamare due volte l'inizializzatore per i propri controlli, ignorando uno dei risultati. La funzione di aggiornamento `setSecretCombination` è predisposta per il futuro riavvio della partita, ma non viene ancora utilizzata.
+
+Il valore generato è stato controllato manualmente nella console del browser; il log temporaneo è stato poi rimosso.
 
 ## Esperienza finale prevista
 
@@ -58,8 +66,9 @@ La partita terminerà con quattro strike oppure con l'esaurimento dei tentativi 
 - [x] Generare quattro cifre casuali senza duplicati.
 - [x] Preparare React e Vite.
 - [x] Esportare le funzioni da un modulo separato.
-- [ ] Collegare le funzioni al componente React.
-- [ ] Conservare il segreto nello stato della partita.
+- [x] Collegare la generazione del segreto al componente React.
+- [x] Conservare il segreto nello stato della partita.
+- [ ] Collegare il confronto alla gestione dei tentativi.
 - [ ] Creare un modulo di inserimento del tentativo.
 - [ ] Validare quattro cifre da 1 a 9, senza ripetizioni.
 - [ ] Convertire l'input testuale in un array di numeri prima del confronto.
@@ -74,7 +83,7 @@ Il limite di **8 tentativi** è una proposta ancora da confermare. I tentativi n
 ## Tecnologie e scelte
 
 - **JavaScript** per la logica e i componenti.
-- **React** per l'interfaccia e, nei prossimi passaggi, lo stato della partita.
+- **React** per l'interfaccia e lo stato della combinazione segreta.
 - **Vite** per il server di sviluppo e la compilazione.
 - **npm** per la gestione delle dipendenze.
 
@@ -99,7 +108,7 @@ L'app va aperta tramite il server locale, non con un doppio clic su `index.html`
 | File | Responsabilità |
 | --- | --- |
 | `gameplay.js` | Generazione del segreto e confronto dei tentativi |
-| `src/App.jsx` | Componente principale, attualmente con il solo titolo |
+| `src/App.jsx` | Componente principale: stato del segreto e visualizzazione del titolo |
 | `src/main.jsx` | Collegamento tra React e l'elemento radice della pagina |
 | `index.html` | Documento HTML che ospita l'app |
 | `vite.config.js` | Configurazione di Vite e del plugin React |
